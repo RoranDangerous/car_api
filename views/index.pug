@@ -1,0 +1,43 @@
+html
+  head
+    title VIN Check
+    link(rel='stylesheet' href='https://getbootstrap.com/docs/4.4/dist/css/bootstrap.min.css')
+    script.
+      const checkVIN = () => {
+        const vin = document.getElementById("vin").value;
+
+        if(!vin){
+          showError('Please enter VIN');
+          return;
+        }
+
+        fetch(`/vin/${vin}`)
+          .then(r => r.json())
+          .then(result => {
+            showError(result.error);
+            showResult(result.data);
+          })
+      }
+
+      const showResult = (result) => {
+        const resultEl = document.getElementById("result");
+        if(result) resultEl.innerHTML = `${result.year} ${result.make} ${result.model}`
+        else resultEl.innerHTML = '';
+      }
+
+      const showError = (error) => {
+        const errorEl = document.getElementById("error");
+        if(!error) errorEl.style.visibility = "hidden";
+        else{
+          errorEl.innerHTML = error;
+          errorEl.style.visibility = "visible";
+        }
+      }
+  body.m-4
+    div.form-group
+      label(for = "vin") Enter VIN here:
+      input(id = "vin" name = "vin" placeholder="e.g. 3N1AB6AP7BL7292").form-control
+      small.text-danger(id = "error" )
+    button(onclick = "checkVIN.call(this)").btn.btn-primary Check
+
+  h2(id = "result").mt-4
