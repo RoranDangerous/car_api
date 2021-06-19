@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "nodemon src/server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
     "node-fetch": "^2.6.1",
+    "nodemon": "^2.0.7",
     "pug": "^3.0.2"
   },
   "devDependencies": {
